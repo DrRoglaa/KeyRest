@@ -41,10 +41,10 @@ jobs:
             --volname "KeyRest" \
             --window-size 600 400 \
             --icon-size 128 \
-            --icon "KeyRest.app" 150 200 \
+            --icon "KeyRest.png" 150 200 \
             --app-drop-link 450 200 \
             "KeyRest-${VERSION}.dmg" \
-            package/
+            dist/
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v2
