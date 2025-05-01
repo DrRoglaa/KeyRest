@@ -1,0 +1,54 @@
+name: Build & Release KeyRest
+
+on:
+  push:
+    tags:
+      - 'v*' # e.g., v1.0.0
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: extract_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Set up Xcode
+        run: sudo xcode-select -switch /Applications/Xcode.app
+
+      - name: Set app version in Info.plist
+        run: |
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" KeyRest/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION" KeyRest/Info.plist
+
+      - name: Build the app
+        run: |
+          xcodebuild -scheme "KeyRest" -configuration Release -derivedDataPath build -allowProvisioningUpdates
+
+      - name: Install create-dmg
+        run: |
+          brew install create-dmg
+
+      - name: Create DMG
+        run: |
+          mkdir -p package
+          cp -R build/Build/Products/Release/KeyRest.app package/
+          create-dmg \
+            --volname "KeyRest" \
+            --window-size 600 400 \
+            --icon-size 128 \
+            --icon "KeyRest.app" 150 200 \
+            --app-drop-link 450 200 \
+            "KeyRest-${VERSION}.dmg" \
+            package/
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: KeyRest-${{ env.VERSION }}.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
