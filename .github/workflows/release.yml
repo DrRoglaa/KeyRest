@@ -25,10 +25,6 @@ jobs:
           /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" KeyRest/Info.plist
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION" KeyRest/Info.plist
           
-      - name: Downgrade project file safely
-          run: |
-            sed -i '' 's/objectVersion = 77;/objectVersion = 56;/' KeyRest.xcodeproj/project.pbxproj
-        
        - name: Build the app
           run: |
             xcodebuild -scheme "KeyRest" -configuration Release -derivedDataPath build -allowProvisioningUpdates
