@@ -24,10 +24,10 @@ jobs:
         run: |
           /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" KeyRest/Info.plist
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION" KeyRest/Info.plist
-          
-       - name: Build the app
-          run: |
-            xcodebuild -scheme "KeyRest" -configuration Release -derivedDataPath build -allowProvisioningUpdates
+
+      - name: Build the app
+        run: |
+          xcodebuild -scheme "KeyRest" -configuration Release -derivedDataPath build -allowProvisioningUpdates
 
       - name: Install create-dmg
         run: |
