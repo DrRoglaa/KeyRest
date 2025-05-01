@@ -17,6 +17,9 @@ jobs:
         id: extract_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
+      - name: Show Xcode version
+        run: xcodebuild -version
+
       - name: Set up Xcode
         run: sudo xcode-select -switch /Applications/Xcode.app
 
