@@ -47,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem.button {
-            button.title = "🔓 KeyRest"
+            button.title = "KeyRest"
         }
 
         let menu = NSMenu()
@@ -133,7 +133,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         remainingSeconds -= 1
         if remainingSeconds > 0 {
             if let button = statusItem.button {
-                button.title = "🔒 \(remainingSeconds)s"
+                button.title = "   " + " \(remainingSeconds)s"
             }
         }
     }
@@ -143,7 +143,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             guard let button = self.statusItem.button else { return }
             
             let systemName = locked ? "lock.fill" : "lock.open.fill"
-            let toolTipText = locked ? "KeyRest — Keyboard Locked" : "KeyRest — Keyboard Unlocked"
+            let toolTipText = locked ? "KeyRest — Keyboard is Locked" : "KeyRest — Keyboard is Unlocked"
             
             if let newImage = NSImage(systemSymbolName: systemName, accessibilityDescription: nil) {
                 newImage.isTemplate = true
@@ -155,7 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 } completionHandler: {
                     button.image = newImage
                     button.imagePosition = .imageOnly
-                    button.toolTip = toolTipText // 👈 Set the tooltip here
+                    button.toolTip = toolTipText
                     NSAnimationContext.runAnimationGroup { context in
                         context.duration = 0.2
                         context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)

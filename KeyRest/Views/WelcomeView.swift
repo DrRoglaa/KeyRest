@@ -22,6 +22,8 @@ struct WelcomeView: View {
             Use the Menu Bar or press Cmd + Option + L to lock anytime.
 
             Don't forget to grant Accessibility permissions when asked!
+            
+            Made with ❤️ in Slovenia by David Rok Roglič
             """)
                 .font(.body)
                 .multilineTextAlignment(.center)
